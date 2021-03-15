@@ -1,0 +1,27 @@
+{
+  "name": "river-conditions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "River Conditions",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^3.0.1",
+    "gatsby-plugin-image": "^1.0.1",
+    "gatsby-plugin-postcss": "^4.0.0",
+    "gatsby-plugin-sharp": "^3.0.1",
+    "gatsby-source-filesystem": "^2.1.43",
+    "gatsby-transformer-sharp": "^3.0.0",
+    "postcss": "^8.2.8",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

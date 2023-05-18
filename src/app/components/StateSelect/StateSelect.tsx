@@ -1,13 +1,5 @@
 'use client'
 
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-} from '@mui/material'
 import React, { useState } from 'react'
 
 type UsState = {
@@ -16,7 +8,7 @@ type UsState = {
   key?: string
 }
 const StateSelect = () => {
-  const [usState, setUsState] = useState('Utah')
+  const [usState, setUsState] = useState<string>()
 
   const handleChange = (event: SelectChangeEvent) => {
     setUsState(event.target.value as string)
@@ -76,29 +68,39 @@ const StateSelect = () => {
   ]
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <div>
+      {/* <InputLabel
+        disableAnimation
+        sx={{ color: 'white' }}
+        id="state-select-input-label"
+      >
+        State
+      </InputLabel>
       <FormControl fullWidth>
-        <InputLabel id="state-select-input-label">State</InputLabel>
         <Select
           labelId="state-select-label"
           id="state-select"
           value={usState}
           label="State"
           onChange={handleChange}
-          variant="filled"
-          sx={{ backgroundColor: 'white' }}
-        >
-          {/* using st as a variable here since the word state is so widely used in React */}
-          {usStates.map((st) => {
-            return (
-              <MenuItem value={st.name} key={st.abbv}>
-                {st.name}
-              </MenuItem>
-            )
-          })}
-        </Select>
-      </FormControl>
-    </Box>
+          sx={{ bgcolor: 'white' }}
+          variant="outlined"
+        >\
+    //   </FormControl> */}
+      <div className="form-block">
+        <div className="relative w-full md:w-64">
+          <select onChange={handleChange} className="dropdown-select">
+            {usStates.map((st) => {
+              return (
+                <option value={st.name.toLowerCase()} key={st.abbv}>
+                  {st.name}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -1,3 +1,6 @@
+// 'use client'
+
+import { Typography } from '@mui/material'
 import type { River, USGSdata } from '@/types'
 import { RiversContainer, StateSelect } from './components'
 import styles from './page.module.css'
@@ -110,7 +113,7 @@ const Home = async () => {
   return (
     <main className={styles.main}>
       <div>
-        <h1>River Conditions</h1>
+        <h1 className="text-xl font-bold">River Conditions</h1>
         <StateSelect />
         <RiversContainer riverData={convertDataToRiverObject(data)} />
       </div>

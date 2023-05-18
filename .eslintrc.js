@@ -7,8 +7,9 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:import/typescript',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', '@tanstack/query'],
   rules: {
     // Custom prettier settings, and warn only since it's formatting
     'prettier/prettier': [

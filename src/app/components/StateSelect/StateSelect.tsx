@@ -7,10 +7,14 @@ type UsState = {
   abbv: string
   key?: string
 }
-const StateSelect = () => {
-  const [usState, setUsState] = useState<string>()
 
-  const handleChange = (event: SelectChangeEvent) => {
+interface StateSelectProps {
+  usState: string
+  setUsState: React.Dispatch<React.SetStateAction<string>>
+}
+
+const StateSelect = ({ usState, setUsState }: StateSelectProps) => {
+  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
     setUsState(event.target.value as string)
   }
 
@@ -89,10 +93,14 @@ const StateSelect = () => {
     //   </FormControl> */}
       <div className="form-block">
         <div className="relative w-full md:w-64">
-          <select onChange={handleChange} className="dropdown-select">
+          <select
+            onChange={handleChange}
+            className="dropdown-select"
+            value={usState}
+          >
             {usStates.map((st) => {
               return (
-                <option value={st.name.toLowerCase()} key={st.abbv}>
+                <option value={st.name} key={st.abbv}>
                   {st.name}
                 </option>
               )

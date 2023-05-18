@@ -1,6 +1,7 @@
-// 'use client'
+'use client'
 
-import { Typography } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import type { River, USGSdata } from '@/types'
 import { RiversContainer, StateSelect } from './components'
 import styles from './page.module.css'
@@ -19,7 +20,8 @@ const tempDescription = 'Temperature, water, degrees Celsius'
  */
 const getDataByState = async (stateCode: string) => {
   const res = await fetch(
-    `http://waterservices.usgs.gov/nwis/iv/?stateCd=${stateCode}&format=json`
+    `http://waterservices.usgs.gov/nwis/iv/?stateCd=${stateCode}&format=json`,
+    { cache: 'no-store' }
   )
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
@@ -38,9 +40,20 @@ const getDataByRiver = async (riverCode: string | string[]) => {
   if (riverCode.length > 0 && typeof riverCode !== 'string') {
     rivers = riverCode.join(',')
   }
-  const res = await fetch(
-    `http://waterservices.usgs.gov/nwis/iv/?site=${rivers}&parameterCd=00060,00065,00010&format=json`
-  )
+
+  //   const { isLoading, error, data } = useQuery({
+  //     queryKey: ['usgsData', rivers],
+  //     queryFn: () =>
+  //       fetch(
+  //         `http://waterservices.usgs.gov/nwis/iv/?site=${rivers}&parameterCd=00060,00065,00010&format=json`
+  //       ).then((res) => res.json()),
+  //   })
+  //   const res = await fetch(
+  //     `http://waterservices.usgs.gov/nwis/iv/?site=${rivers}&parameterCd=00060,00065,00010&format=json`
+  //   )
+
+  const res = await fetch('https://api.publicapis.org/entries')
+
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
@@ -50,7 +63,12 @@ const getDataByRiver = async (riverCode: string | string[]) => {
     throw new Error('Failed to fetch data')
   }
 
-  return res.json()
+  return res
+
+  //   return res.json()
+  //   if (isLoading) return 'Loading...'
+
+  //   if (error) return `An error has occurred`
 }
 
 const convertDataToRiverObject = (jsonResponse: USGSdata) => {
@@ -107,15 +125,28 @@ const convertDataToRiverObject = (jsonResponse: USGSdata) => {
   return rivers
 }
 
-const Home = async () => {
+const Home = () => {
+  //   const [usState, setUsState] = useState<string>('Utah')
   //   const data = await getDataByState('ny')
-  const data = await getDataByRiver(['01646500', '06306300'])
+
+  const [usgsData, setUsgsData] = useState<USGSdata>()
+  useEffect(() => {
+    getDataByRiver(['01646500', '06306300']).then((data) => {
+      //   console.log(data)
+      setUsgsData(data)
+    })
+  }, [])
+
+  console.log(usgsData)
   return (
     <main className={styles.main}>
       <div>
         <h1 className="text-xl font-bold">River Conditions</h1>
-        <StateSelect />
-        <RiversContainer riverData={convertDataToRiverObject(data)} />
+
+        {/* <StateSelect usState={usState} setUsState={setUsState} /> */}
+        {/* <RiversContainer
+          riverData={usgsData ? convertDataToRiverObject(usgsData) : 'no data'}
+        /> */}
       </div>
     </main>
   )

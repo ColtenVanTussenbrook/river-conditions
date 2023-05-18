@@ -1,9 +1,12 @@
-import { River, USGSdata } from "@/types"
+'use client'
 
-const RiversCard = ({river}: { river: River}) => (
-    // Loop through river data and display a RiverCard for each one
+import { CardContent, Typography } from '@mui/material'
+import type { River } from '@/types'
 
-    <>{river.sourceInfo.siteName}</>
+const RiversCard = ({ river }: { river: River }) => (
+  <CardContent>
+    <Typography variant="h3">{river.name}</Typography>
+  </CardContent>
 )
 
 export default RiversCard

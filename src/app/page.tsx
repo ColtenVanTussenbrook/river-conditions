@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import * as JsSearch from 'js-search'
 import type { River, USGSdata, UsState } from '@/types'
-import { RiversContainer, SortSelect, StateSelect } from './components'
+import { RiversContainer, Search, SortSelect, StateSelect } from './components'
 import styles from './page.module.css'
 
 // TODO: move these global variables
@@ -82,6 +83,7 @@ const Home = () => {
   const [usState, setUsState] = useState<UsState>({ name: 'Utah', abbv: 'UT' })
   const [selection, setSelection] = useState<string>('popularSel')
   const [usgsData, setUsgsData] = useState<USGSdata>()
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   useEffect(() => {
     let dynamicPartOfUrl = ''
@@ -107,18 +109,36 @@ const Home = () => {
     fetchData()
   }, [selection, usState])
 
+  const riversList = usgsData ? convertDataToRiverObject(usgsData) : []
+  const search = new JsSearch.Search('name')
+  search.addIndex('name')
+  search.addDocuments(riversList)
+  let foundRivers: River[] = riversList
+
+  if (searchQuery !== '') {
+    foundRivers = search.search(searchQuery)
+  }
+
   return (
     <main className={styles.main}>
-      <div className="min-w-1/2">
-        <h1 className="text-xl font-bold">River Conditions</h1>
+      <div className="min-w-1/2 text-center">
+        <h1 className="text-5xl font-bold">River Conditions</h1>
+        <p>Easy way to see current flows on rivers in the US</p>
+        <p>Show data by either popular river or state</p>
         <SortSelect selection={selection} setSelection={setSelection} />
 
         {selection === 'stateSel' && (
           <StateSelect usState={usState} setUsState={setUsState} />
         )}
 
-        {usgsData ? (
-          <RiversContainer riverData={convertDataToRiverObject(usgsData)} />
+        <Search
+          searchTerm={selection === 'stateSel' ? usState.name : 'popular'}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+
+        {foundRivers ? (
+          <RiversContainer riverData={foundRivers} />
         ) : (
           // TODO: add support link
           <p>

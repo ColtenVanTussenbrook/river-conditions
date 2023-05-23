@@ -9,28 +9,32 @@ const SortSelect = ({ selection, setSelection }: SortSelectProps) => {
   }
 
   return (
-    <div className="App">
-      <h3>Sort river data by:</h3>
+    <div className="flex justify-center mb-4">
+      <div className="mr-4">
+        <input
+          type="radio"
+          name="riverSortSelect"
+          value="popularSel"
+          id="regular"
+          checked={selection === 'popularSel'}
+          onChange={onOptionChange}
+          className="mx-1"
+        />
+        <label htmlFor="regular">Popular Rivers</label>
+      </div>
 
-      <input
-        type="radio"
-        name="riverSortSelect"
-        value="popularSel"
-        id="regular"
-        checked={selection === 'popularSel'}
-        onChange={onOptionChange}
-      />
-      <label htmlFor="regular">Popular Rivers</label>
-
-      <input
-        type="radio"
-        name="riverSortSelect"
-        value="stateSel"
-        id="stateSel"
-        checked={selection === 'stateSel'}
-        onChange={onOptionChange}
-      />
-      <label htmlFor="stateSel">State</label>
+      <div>
+        <input
+          type="radio"
+          name="riverSortSelect"
+          value="stateSel"
+          id="stateSel"
+          checked={selection === 'stateSel'}
+          onChange={onOptionChange}
+          className="mx-1"
+        />
+        <label htmlFor="stateSel">State</label>
+      </div>
     </div>
   )
 }

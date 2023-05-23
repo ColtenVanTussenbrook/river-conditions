@@ -72,10 +72,10 @@ const StateSelect = ({ usState, setUsState }: StateSelectProps) => {
   return (
     <div>
       <div className="form-block">
-        <div className="relative w-full md:w-64">
+        <div className="relative w-full">
           <select
+            className="bg-slate-500 p-2 rounded-md"
             onChange={handleChange}
-            className="dropdown-select"
             value={usState.name}
           >
             {usStates.map((st) => {

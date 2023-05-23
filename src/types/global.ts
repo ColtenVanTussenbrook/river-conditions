@@ -53,3 +53,8 @@ export type USGSdata = {
     timeSeries: RiverUsgs[]
   }
 }
+
+export type UsState = {
+  name: string
+  abbv: string
+}

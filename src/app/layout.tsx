@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google'
-import QueryProvider from '../provider'
 import './globals.css'
+import { Nav } from './components'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>{children}</QueryProvider>
+        <Nav />
+        {children}
       </body>
     </html>
   )

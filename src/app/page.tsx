@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import * as JsSearch from 'js-search'
 import type { River, USGSdata, UsState } from '@/types'
-import { RiversContainer, Search, SortSelect, StateSelect } from './components'
+import { RiversContainer, Search, Nav } from './components'
 import styles from './page.module.css'
+import ShowByContainer from './components/ShowByContainer/ShowByContainer'
 
 // TODO: move these global variables
 const cfsCode = '00060'
@@ -80,7 +81,7 @@ const popularRivers = [
 ]
 
 const Home = () => {
-  const [usState, setUsState] = useState<UsState>({ name: 'Utah', abbv: 'UT' })
+  const [usState, setUsState] = useState<UsState>({ name: 'State', abbv: '' })
   const [selection, setSelection] = useState<string>('popularSel')
   const [usgsData, setUsgsData] = useState<USGSdata>()
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -122,14 +123,16 @@ const Home = () => {
   return (
     <main className={styles.main}>
       <div className="min-w-1/2 text-center">
-        <h1 className="text-5xl font-bold">River Conditions</h1>
-        <p>Easy way to see current flows on rivers in the US</p>
-        <p>Show data by either popular river or state</p>
-        <SortSelect selection={selection} setSelection={setSelection} />
-
-        {selection === 'stateSel' && (
-          <StateSelect usState={usState} setUsState={setUsState} />
-        )}
+        <h1 className="text-3xl md:text-5xl font-bold">River Conditions</h1>
+        <p className="text-xs md:text-base mb-4">
+          Easy way to see current flows on rivers in the US
+        </p>
+        <ShowByContainer
+          selection={selection}
+          setSelection={setSelection}
+          usState={usState}
+          setUsState={setUsState}
+        />
 
         <Search
           searchTerm={selection === 'stateSel' ? usState.name : 'popular'}
@@ -141,9 +144,7 @@ const Home = () => {
           <RiversContainer riverData={foundRivers} />
         ) : (
           // TODO: add support link
-          <p>
-            No river data. Try refining your search, or contact support here.
-          </p>
+          <p>No river data. Try refining your search, or contact support.</p>
         )}
       </div>
     </main>

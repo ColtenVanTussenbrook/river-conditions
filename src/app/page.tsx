@@ -1,6 +1,8 @@
+/* eslint-disable no-nested-ternary */
+
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import * as JsSearch from 'js-search'
 import type { River, USGSdata, UsState } from '@/types'
 import { RiversContainer, Search } from './components'
@@ -38,20 +40,19 @@ const Home = () => {
     fetchData()
   }, [selection, usState])
 
-  const riversList = usgsData ? convertDataToRiverObject(usgsData) : []
+  let riversList = usgsData ? convertDataToRiverObject(usgsData) : []
   const search = new JsSearch.Search('name')
   search.addIndex('name')
   search.addDocuments(riversList)
-  let foundRivers: River[] | null = riversList.length > 0 ? riversList : null
 
-  if (searchQuery !== '' && foundRivers) {
-    foundRivers = search.search(searchQuery) as River[]
+  if (searchQuery !== '' && riversList) {
+    riversList = search.search(searchQuery) as River[]
   }
 
   return (
     <main className={styles.main}>
       <div className="min-w-1/2 text-center">
-        <h1 className="text-3xl md:text-5xl font-bold">River Conditions</h1>
+        <h1 className="text-4xl md:text-5xl font-bold">River Conditions</h1>
         <p className="text-xs md:text-base mb-4">
           Easiest way to see current flows on rivers in the US
         </p>
@@ -68,8 +69,10 @@ const Home = () => {
           setSearchQuery={setSearchQuery}
         />
 
-        {foundRivers ? (
-          <RiversContainer riverData={foundRivers} />
+        {riversList ? (
+          <Suspense fallback={<p>Loading feed...</p>}>
+            <RiversContainer riverData={riversList} />
+          </Suspense>
         ) : (
           // TODO: add support link
           <p>No river data. Try refining your search, or contact support.</p>

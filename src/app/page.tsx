@@ -1,9 +1,8 @@
-/* eslint-disable no-nested-ternary */
-
 'use client'
 
-import React, { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as JsSearch from 'js-search'
+import { Grid } from 'react-loader-spinner'
 import type { River, USGSdata, UsState } from '@/types'
 import { RiversContainer, Search } from './components'
 import styles from './page.module.css'
@@ -15,8 +14,10 @@ const Home = () => {
   const [selection, setSelection] = useState<string>('popularSel')
   const [usgsData, setUsgsData] = useState<USGSdata>()
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
+    setIsLoading(true)
     let dynamicPartOfUrl = ''
     const fetchData = async () => {
       if (selection === 'popularSel') {
@@ -35,6 +36,7 @@ const Home = () => {
       }
 
       setUsgsData(json)
+      setIsLoading(false)
     }
 
     fetchData()
@@ -69,10 +71,23 @@ const Home = () => {
           setSearchQuery={setSearchQuery}
         />
 
-        {riversList ? (
-          <Suspense fallback={<p>Loading feed...</p>}>
+        {/* TODO: refactor this ato avoid a nested ternary */}
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {riversList.length > 0 ? (
+          isLoading ? (
+            <Grid
+              height="80"
+              width="80"
+              color="#ffffff"
+              ariaLabel="grid-loading"
+              radius="12.5"
+              wrapperStyle={{ justifyContent: 'center', marginTop: '6rem' }}
+              wrapperClass=""
+              visible
+            />
+          ) : (
             <RiversContainer riverData={riversList} />
-          </Suspense>
+          )
         ) : (
           // TODO: add support link
           <p>No river data. Try refining your search, or contact support.</p>

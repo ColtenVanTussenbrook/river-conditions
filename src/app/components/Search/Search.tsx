@@ -18,12 +18,13 @@ const Search = ({ searchTerm, searchQuery, setSearchQuery }: SearchProps) => {
       </label>
       <input
         value={searchQuery}
-        onInput={(event) => setSearchQuery(event.target.value)}
+        onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchQuery(event.target.value)
+        }}
         type="text"
         placeholder={`Search ${searchWord} Rivers`}
         className="h-10 w-full rounded-md px-6 bg-slate-100 text-slate-700"
       />
-      {/* <button type="submit">Search</button> */}
     </form>
   )
 }

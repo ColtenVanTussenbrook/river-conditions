@@ -10,7 +10,8 @@ import ShowByContainer from './components/ShowByContainer/ShowByContainer'
 import { popularRivers, convertDataToRiverObject } from '..'
 
 const Home = () => {
-  const [usState, setUsState] = useState<UsState>({ name: 'State', abbv: '' })
+  // TODO: it would be cool to default this to their geo location. For now though, set UT as as default.
+  const [usState, setUsState] = useState<UsState>({ name: 'Utah', abbv: 'UT' })
   const [selection, setSelection] = useState<string>('popularSel')
   const [usgsData, setUsgsData] = useState<USGSdata>()
   const [searchQuery, setSearchQuery] = useState<string>('')

@@ -3,7 +3,7 @@ import Link from 'next/link'
 const Nav = () => {
   return (
     <div>
-      <nav className="text-right m-8">
+      <nav className="text-right m-4 md:m-8">
         <Link className="mr-4" href="/">
           HOME
         </Link>

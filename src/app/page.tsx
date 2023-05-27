@@ -72,7 +72,7 @@ const Home = () => {
           setSearchQuery={setSearchQuery}
         />
 
-        {/* TODO: refactor this ato avoid a nested ternary */}
+        {/* TODO: refactor this to avoid a nested ternary */}
         {/* eslint-disable-next-line no-nested-ternary */}
         {riversList.length > 0 ? (
           isLoading ? (
@@ -83,7 +83,6 @@ const Home = () => {
               ariaLabel="grid-loading"
               radius="12.5"
               wrapperStyle={{ justifyContent: 'center', marginTop: '6rem' }}
-              wrapperClass=""
               visible
             />
           ) : (

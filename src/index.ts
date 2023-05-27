@@ -27,6 +27,8 @@ export const popularRivers = [
  * @returns array
  */
 export const convertDataToRiverObject = (jsonResponse: USGSdata) => {
+  console.log(jsonResponse)
+  const externalLink = 'https://waterdata.usgs.gov/monitoring-location/'
   const { timeSeries } = jsonResponse.value
   const rivers: River[] = []
 
@@ -49,6 +51,7 @@ export const convertDataToRiverObject = (jsonResponse: USGSdata) => {
           value: riverValue === heightCode ? dataValue : '',
           description: heightDescription,
         },
+        link: externalLink + river.sourceInfo.siteCode[0].value,
       })
     } else {
       const riverToUpdate = rivers.find((r) => {

@@ -21,6 +21,16 @@ const RiverCard = ({ river }: { river: River }) => (
         {`${celsiusToFarenheit(river.temperature?.value)} F`}
       </p>
     )}
+    {river.link && (
+      <a
+        className="text-xs text-slate-600"
+        href={river.link}
+        target="_blank"
+        rel="noreferrer"
+      >
+        View all data on USGS
+      </a>
+    )}
   </div>
 )
 

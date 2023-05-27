@@ -9,6 +9,7 @@ export type River = {
   discharge?: VariableDescription
   height?: VariableDescription
   temperature: VariableDescription
+  link?: string
 }
 
 export type RiverUsgs = {

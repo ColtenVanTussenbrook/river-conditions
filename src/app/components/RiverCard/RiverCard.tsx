@@ -6,7 +6,9 @@ const RiverCard = ({ river }: { river: River }) => (
     <h3 className="font-semibold mb-2">{river.name.toUpperCase()}</h3>
     <p>
       <span className="font-semibold">Flow:</span>{' '}
-      {river.discharge?.value ? `${river.discharge.value} cfs` : 'n/a'}
+      {river.discharge?.value && parseInt(river.discharge.value, 10) > 0
+        ? `${river.discharge.value} cfs`
+        : 'n/a'}
     </p>
     {river.height?.value && (
       <p>

@@ -18,6 +18,7 @@ export const popularRivers = [
   '10163000', // Provo River
   '10109000', // Logan River
   '06040000', // Madison River
+  '10086000', // Oneida Narrows
 ]
 /**
  * Converts the messy USGS data into a nice clean array of objects.
@@ -27,7 +28,6 @@ export const popularRivers = [
  * @returns array
  */
 export const convertDataToRiverObject = (jsonResponse: USGSdata) => {
-  console.log(jsonResponse)
   const externalLink = 'https://waterdata.usgs.gov/monitoring-location/'
   const { timeSeries } = jsonResponse.value
   const rivers: River[] = []
